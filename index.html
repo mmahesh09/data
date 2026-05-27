@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banking AI Assistant</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <span class="logo-icon">🏦</span>
+          <span class="logo-text">Banking AI</span>
+        </div>
+        <button class="new-chat-btn" onclick="newChat()">+ New Chat</button>
+      </div>
+
+      <div class="upload-section">
+        <p class="section-label">KNOWLEDGE BASE</p>
+        <label class="upload-label" for="fileInput">
+          <span class="upload-icon">⬆</span>
+          <span>Upload Document</span>
+          <input type="file" id="fileInput" accept=".xlsx,.xls,.md,.txt,.pdf" hidden onchange="uploadFile(this)" />
+        </label>
+        <div class="upload-status" id="uploadStatus"></div>
+        <div class="file-list" id="fileList"></div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="model-badge" id="modelBadge">deepseek/deepseek-chat</div>
+      </div>
+    </aside>
+
+    <!-- Main chat area -->
+    <main class="chat-main">
+      <div class="chat-header">
+        <h1 class="chat-title">Banking Metadata Assistant</h1>
+        <p class="chat-subtitle">Ask about data definitions, field mappings, regulatory metadata & more</p>
+      </div>
+
+      <div class="messages" id="messages">
+        <!-- Welcome card -->
+        <div class="welcome-card">
+          <div class="welcome-icon">🏦</div>
+          <h2>How can I help you today?</h2>
+          <p>Upload banking documents (Excel, PDF, Markdown) and ask questions about your data.</p>
+          <div class="starter-grid">
+            <button class="starter-btn" onclick="sendStarter('What tables are available in the banking schema?')">
+              What tables are in the schema?
+            </button>
+            <button class="starter-btn" onclick="sendStarter('What does CIF number mean?')">
+              What does CIF number mean?
+            </button>
+            <button class="starter-btn" onclick="sendStarter('Explain the KYC status field and its possible values')">
+              Explain KYC status field
+            </button>
+            <button class="starter-btn" onclick="sendStarter('What are the regulatory reporting fields?')">
+              Regulatory reporting fields
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="messageInput"
+            placeholder="Ask about banking metadata, field definitions, data lineage..."
+            rows="1"
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Upload documents first, then ask questions about your banking data.</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
